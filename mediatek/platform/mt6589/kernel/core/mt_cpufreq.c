@@ -122,7 +122,7 @@ static unsigned int g_limited_max_ncpu;
 static unsigned int g_limited_max_freq;
 static unsigned int g_limited_min_freq;
 static unsigned int g_cpufreq_get_ptp_level = 0;
-static unsigned int g_max_freq_by_ptp = DVFS_F1; /* default 1.2GHz */
+static unsigned int g_max_freq_by_ptp = DVFS_F0_2; /* default 1.3GHz */
 
 static int g_ramp_down_count = 0;
 
@@ -321,7 +321,7 @@ static unsigned int mt_cpufreq_limit_max_freq_by_early_suspend(void)
     if (!policy)
         goto no_policy;
 
-    cpufreq_driver_target(policy, DVFS_F1, CPUFREQ_RELATION_L);
+    cpufreq_driver_target(policy, DVFS_F0_2, CPUFREQ_RELATION_L);
 
     xlog_printk(ANDROID_LOG_INFO, "Power/DVFS", "mt_cpufreq limited max freq by early suspend %d\n", DVFS_F1);
 
@@ -337,7 +337,7 @@ static unsigned int mt_cpufreq_volt_to_pmic_wrap(unsigned int target_volt)
 {
     unsigned int idx = 0;
 	
-    if(g_cpufreq_get_ptp_level == 0)
+    if(g_cpufreq_get_ptp_level == 1)
     {
         switch (target_volt)
         {
